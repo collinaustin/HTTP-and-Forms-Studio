@@ -3,17 +3,69 @@
 <head>
 	<meta charset="utf-8">
 	<script>
-		// TODO: create a handler
+		// create a handler
+	function setSearchEngine(){
+		const buttonSelected = document.querySelector("input[name=engine]:checked");
+		const query = document.getElementById("q");
+		const form = document.getElementById("searchForm");
+		
+		// Bonus Mission 1: Add validation
+
+		// Option 1: window alert
+		// if (query.value.trim() === ""){
+		// 	alert("Must enter something in search box");
+		// 	event.preventDefault();
+		// }	else if (!buttonSelected){
+		// 	alert("Please select a search engine.");
+		// 	event.preventDefault();
+		// }
+		
+		// Option 2: use error box on page with text
+		const errorBox = document.getElementById("error-box");
+		const errorMsg = document.getElementById("error-message");
+		if (query.value.trim() === ""){
+			errorMsg.innerHTML = "Must enter something in search box";
+			event.preventDefault();
+		}	else if (!buttonSelected){
+			errorMsg.innerHTML = "Please select a search engine.";
+			event.preventDefault();
+		}
+
+		let url = actions[buttonSelected.value];
+		form.action = url;
+
+	
+	}
+
+	let actions = {
+		"google": "https://www.google.com/search",
+		"duckDuckGo": "https://duckduckgo.com/",
+		"bing": "https://www.bing.com/search",
+		"ask": "https://www.ask.com/web"
+	};
+	
     window.addEventListener("load", function(){
-        // TODO: register the handler
+		const form = document.getElementById("searchForm");
+		
+		form.addEventListener("submit", setSearchEngine);	
     });
 	</script>
 </head>
 
 <body>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
+	<form id="searchForm" target="_blank">
+    <!-- form elements -->
+		<label><input type="text" name="q" id="q"></label>
+		<label>Google<input type="radio" name="engine" value="google"></label>
+		<label>DuckDuckGo<input type="radio" name="engine" value="duckDuckGo"></label>
+		<label>Bing<input type="radio" name="engine" value="bing"></label>
+		<label>Ask<input type="radio" name="engine" value="ask"></label>
+		<button id="submit" value="Go!">Go!</button>
 	</form>
 
+	<!-- Bonus mission part 1, option 2 -->
+	<div id="error-box">
+		<p id="error-message"></p>
+	</div>
 </body>
